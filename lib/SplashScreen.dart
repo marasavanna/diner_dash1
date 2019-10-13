@@ -77,7 +77,9 @@ class SplashScreenState extends State<SplashScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    CircularProgressIndicator(),
+                    CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(Colors.white)),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     Text(
                       "Going out \nfor everyone",
