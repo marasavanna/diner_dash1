@@ -11,4 +11,8 @@ abstract class Styles {
       color: Colors.white,
       fontSize: 18,
       fontWeight: FontWeight.bold);
+
+  static const descriptionText = TextStyle(
+      color: Colors.white,
+      fontSize: 18);
 }

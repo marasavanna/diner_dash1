@@ -30,17 +30,14 @@ class SplashScreenState extends State<SplashScreen> {
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                // Where the linear gradient begins and ends
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                // Add one stop for each color. Stops should increase from 0 to 1
-                stops: [0.3, 0.5, 0.7, 0.8],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.1, 0.4, 0.7, 0.9],
                 colors: [
-                  // Colors are easy thanks to Flutter's Colors class.
-                  Colors.pink[300],
-                  Colors.pink[400],
-                  Colors.pink[400],
-                  Colors.pink[300],
+                  Color(0xFF3594DD),
+                  Color(0xFF4563DB),
+                  Color(0xFF5036D5),
+                  Color(0xFF5B16D0),
                 ],
               ),
             ),
@@ -55,19 +52,16 @@ class SplashScreenState extends State<SplashScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 80,
+                        radius: 100,
                         child: ClipOval(
                           child: Image.asset(
-                            "lib/resources/images/logo.png",
+                            "lib/resources/images/app_logo.png",
+                            height: 300.0,
+                            width: 300.0,
                           ),
                         ),
                       ),
                       Padding(padding: EdgeInsets.only(top: 20.0)),
-                      Text(
-                        "Diner Dash",
-                        style: Styles.titleText,
-                      )
                     ],
                   ),
                 ),
@@ -77,7 +71,9 @@ class SplashScreenState extends State<SplashScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    CircularProgressIndicator(),
+                    CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(Colors.white)),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     Text(
                       "Going out \nfor everyone",
@@ -99,10 +95,16 @@ class SplashScreenState extends State<SplashScreen> {
     setState(() {
       _ftuxCounter = (prefs.getInt(_ftuxCounterKey) ?? 0) + 1;
       prefs.setInt(_ftuxCounterKey, _ftuxCounter);
-      if (_ftuxCounter <= 1) {
-        Timer(Duration(seconds: 5),
-            () => {Navigator.of(context).pushNamed("/WelcomeScreen")});
+      if (_ftuxCounter <= 1000) {
+        _navigateTo("/WelcomeScreen");
+      } else {
+        _navigateTo("/HomeScreen");
       }
     });
+  }
+
+  _navigateTo(String destination){
+    Timer(Duration(seconds: 5),
+            () => {Navigator.of(context).pushNamed(destination)});
   }
 }
