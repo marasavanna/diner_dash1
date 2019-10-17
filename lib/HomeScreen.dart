@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'resources/Styles.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,29 +11,60 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  String result = "Hey there!";
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          // Where the linear gradient begins and ends
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          // Add one stop for each color. Stops should increase from 0 to 1
-          stops: [0.3, 0.5, 0.7, 0.8],
-          colors: [
-            // Colors are easy thanks to Flutter's Colors class.
-            Colors.amber[300],
-            Colors.amber[400],
-            Colors.pink[400],
-            Colors.pink[300],
-          ],
-        ),
+    //_scanQR();
+    return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Text("Welcome Home", style: Styles.titleText)],
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(color: Colors.white),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[Text(result)],
+            ),
+          )
+        ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _scanQR,
+        label: Text("Scan"),
+        icon: Icon(Icons.camera_alt),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  Future _scanQR() async {
+    try {
+      String _qrResult = await BarcodeScanner.scan();
+      setState(() {
+        result = _qrResult;
+      });
+    } on PlatformException catch (ex) {
+      if (ex.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          result = "Camera permission denied!";
+        });
+      } else {
+        setState(() {
+          result = "Something went wrong $ex";
+        });
+      }
+    } on FormatException catch (ex) {
+      setState(() {
+        result = "You pressed the back button before scanning!";
+      });
+    } catch (ex) {
+      setState(() {
+        result = "Something went wrong $ex";
+      });
+    }
   }
 }
