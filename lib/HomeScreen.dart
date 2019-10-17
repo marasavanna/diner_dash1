@@ -15,7 +15,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _scanQR();
+    //_scanQR();
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[],
@@ -27,11 +27,17 @@ class HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(color: Colors.white),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Text("Home")],
+              children: <Widget>[Text(result)],
             ),
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _scanQR,
+        label: Text("Scan"),
+        icon: Icon(Icons.camera_alt),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
