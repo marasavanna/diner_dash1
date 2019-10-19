@@ -1,8 +1,9 @@
-class Client {
 
+class Client {
+  int id;
   String email;
   String name;
   String creditCardNumber;
 
-  Client(email, name, creditCardNumber);
+  Client(this.id, this.email, this.name, this.creditCardNumber);
 }
