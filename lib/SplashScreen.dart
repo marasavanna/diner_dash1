@@ -95,7 +95,7 @@ class SplashScreenState extends State<SplashScreen> {
     setState(() {
       _ftuxCounter = (prefs.getInt(_ftuxCounterKey) ?? 0) + 1;
       prefs.setInt(_ftuxCounterKey, _ftuxCounter);
-      if (_ftuxCounter <= 1000) {
+      if (_ftuxCounter <= 1) {
         _navigateTo("/WelcomeScreen");
       } else {
         _navigateTo("/HomeScreen");
