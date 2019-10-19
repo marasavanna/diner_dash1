@@ -1,8 +1,7 @@
-import 'Table.dart';
 
 class Restaurant {
-  final String name;
-  final List<Table> tables;
+  int id;
+  String name;
 
-  Restaurant(this.name, this.tables);
+  Restaurant(this.id, this.name);
 }
